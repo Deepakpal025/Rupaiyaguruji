@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Video Learning Course - Payment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sora',sans-serif;min-height:100vh;background:linear-gradient(135deg,#0a0f1e 0%,#0d1a2e 50%,#0a1520 100%);display:flex;align-items:center;justify-content:center;padding:2rem 1rem}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:2.5rem 2rem;max-width:420px;width:100%;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(99,102,241,0.15) 0%,transparent 70%);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#a5b4fc;font-size:11px;font-weight:600;padding:5px 12px;border-radius:100px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.5rem}
+.dot{width:6px;height:6px;border-radius:50%;background:#6366f1;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.3}
+.sub{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:2rem}
+.amount-box{background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between}
+.amount-label{font-size:12px;color:rgba(255,255,255,0.45);font-weight:500;letter-spacing:0.06em;text-transform:uppercase}
+.amount-val{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;color:#fff;margin-top:4px}
+.amount-val span{font-size:18px;color:#a5b4fc;margin-right:2px}
+.rupee-icon{width:52px;height:52px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff}
+.qr-wrap{background:#fff;border-radius:16px;padding:1.25rem;display:flex;justify-content:center;margin-bottom:1.5rem}
+.upi-row{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.875rem 1rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;cursor:pointer;transition:border-color 0.2s}
+.upi-row:hover{border-color:rgba(99,102,241,0.4)}
+.upi-label{font-size:11px;color:rgba(255,255,255,0.4);font-weight:500;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px}
+.upi-id{font-family:'JetBrains Mono',monospace;font-size:13px;color:#e0e7ff;font-weight:600}
+.copy-btn{background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.25);color:#a5b4fc;font-size:11px;font-weight:600;padding:5px 10px;border-radius:8px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.copy-btn:hover{background:rgba(99,102,241,0.3)}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-family:'Sora',sans-serif;font-size:14px;font-weight:600;padding:14px;border-radius:14px;border:none;cursor:pointer;text-decoration:none;transition:opacity 0.2s;margin-bottom:1rem}
+.wa-btn:hover{opacity:0.9}
+.footer-note{text-align:center;font-size:11px;color:rgba(255,255,255,0.25);line-height:1.6}
+.copied{color:#34d399 !important;border-color:rgba(52,211,153,0.3) !important;background:rgba(52,211,153,0.1) !important}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="badge"><span class="dot"></span>Payment Request</div>
+  <h1>AI Video Learning Course</h1>
+  <p class="sub">Complete your enrollment by paying below</p>
+  <div class="amount-box">
+    <div>
+      <div class="amount-label">Amount Due</div>
+      <div class="amount-val"><span>₹</span>9</div>
+    </div>
+    <div class="rupee-icon">₹</div>
+  </div>
+  <div class="qr-wrap">
+    <div id="qr"></div>
+  </div>
+  <div class="upi-row" onclick="copyUPI()">
+    <div>
+      <div class="upi-label">UPI ID</div>
+      <div class="upi-id">deepakpal025@yb</div>
+    </div>
+    <button class="copy-btn" id="copybtn">Copy</button>
+  </div>
+  <a class="wa-btn" href="https://chat.whatsapp.com/IJ6bseOMM0YHE5vnVoSXY2" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.132.558 4.13 1.535 5.864L.057 23.492a.75.75 0 00.93.903l5.65-1.476A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.93 0-3.75-.5-5.33-1.38l-.38-.22-3.35.876.892-3.258-.247-.4A9.966 9.966 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    Join WhatsApp Group
+  </a>
+  <p class="footer-note">After payment, share screenshot in the WhatsApp group<br>to get instant access to your course.</p>
+</div>
+<script>
+new QRCode(document.getElementById('qr'),{
+  text:'upi://pay?pa=deepakpal025@yb&pn=Deepak%20Pal&am=9&cu=INR&tn=AI%20Video%20Learning%20Course',
+  width:180,height:180,colorDark:'#1a1a2e',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H
+});
+function copyUPI(){
+  navigator.clipboard.writeText('deepakpal025@yb').then(()=>{
+    const btn=document.getElementById('copybtn');
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+  });
+}
+</script>
+</body>
+</html>
